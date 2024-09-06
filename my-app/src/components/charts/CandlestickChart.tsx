@@ -1,21 +1,20 @@
 "use client";
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
-import { fetchCandlestickData } from '../../services/chartDataService';  // Import the service
+import { fetchCandlestickData } from '../../services/chartDataService';
 
-// Dynamically import ReactApexChart to avoid server-side rendering issues
+// Dynamically import the chart component to avoid SSR issues
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function CandlestickChart() {
-  // State to store chart data and ApexChart options
-  const [series, setSeries] = useState([{ data: [] }]);
+  const [series, setSeries] = useState([{ data: [] }]); // Chart data state
   const [options] = useState({
     chart: {
-      type: 'candlestick' as const,
+      type: 'candlestick',
       height: 350
     },
     xaxis: {
-      type: 'datetime' as const
+      type: 'datetime'
     },
     yaxis: {
       tooltip: {
@@ -24,20 +23,18 @@ export default function CandlestickChart() {
     }
   });
 
-  // Fetch data on component mount
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchCandlestickData();  // Fetch data from the service
+        const data = await fetchCandlestickData();
 
-        // Transform the API response into the format ApexCharts expects
+        // Format API response to match chart requirements
         const formattedData = data.map((item: any) => ({
           x: new Date(item.x),
           y: [parseFloat(item.open), parseFloat(item.high), parseFloat(item.low), parseFloat(item.close)]
         }));
 
-        // Set the transformed data in the series
-        setSeries([{ data: formattedData }]);
+        setSeries([{ data: formattedData }]); // Update chart data
       } catch (error) {
         console.error('Error fetching candlestick chart data:', error);
       }
@@ -48,7 +45,7 @@ export default function CandlestickChart() {
 
   return (
     <div id="chart" style={{ height: "100%", width: "100%" }}>
-      <ApexChart options={options} series={series} type="candlestick" />
+      <ApexChart options={options} series={series} type="candlestick"/>
     </div>
   );
 }

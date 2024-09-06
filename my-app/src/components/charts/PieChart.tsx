@@ -1,17 +1,16 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
-import { fetchPieChartData } from '../../services/chartDataService';  // Import the data fetching service
+import { fetchPieChartData } from '../../services/chartDataService';  
 
 export default function PieChart() {
   const chartRef = useRef(null);
   const [chartData, setChartData] = useState<any[]>([]);
 
-  // Fetch the data from the API
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchPieChartData();  // Call the service to fetch data
+        const data = await fetchPieChartData(); 
         setChartData(data);
       } catch (error) {
         console.error("Error fetching Pie chart data:", error);
@@ -21,28 +20,25 @@ export default function PieChart() {
     getData();
   }, []);
 
-  // Update the chart when data is available
   useEffect(() => {
     if (chartData.length > 0 && chartRef.current) {
-      // Destroy the previous chart instance if it exists
       if ((chartRef.current as any).chart) {
-        (chartRef.current as any).chart.destroy();
+        (chartRef.current as any).chart.destroy(); // Destroy previous chart instance
       }
 
-      // Transform the API response into the format needed for Chart.js
-      const labels = chartData.map(item => item.label);
-      const values = chartData.map(item => parseFloat(item.value));
+      const labels = chartData.map(item => item.label); 
+      const values = chartData.map(item => parseFloat(item.value)); 
 
       const context = (chartRef.current as any).getContext("2d");
 
       const newChart = new Chart(context, {
         type: "pie",
         data: {
-          labels: labels,  // Use the labels from the API response
+          labels: labels,
           datasets: [
             {
               label: "# of Sales",
-              data: values,  // Use the values from the API response
+              data: values, 
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",
@@ -65,11 +61,11 @@ export default function PieChart() {
 
       (chartRef.current as any).chart = newChart;
     }
-  }, [chartData]);  // Re-run this effect when `chartData` changes
+  }, [chartData]);  
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      <canvas ref={chartRef}></canvas>
+      <canvas ref={chartRef} data-testid="pie-chart-canvas"></canvas>
     </div>
   );
 }

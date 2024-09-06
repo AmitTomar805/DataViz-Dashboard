@@ -1,17 +1,16 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
-import { fetchLineChartData } from '../../services/chartDataService';  // Import the service
+import { fetchLineChartData } from '../../services/chartDataService';  
 
 export default function LineChart() {
   const chartRef = useRef(null);
   const [chartData, setChartData] = useState<any[]>([]);
 
-  // Fetch the data from the API
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchLineChartData();  // Call the service function to fetch data
+        const data = await fetchLineChartData();
         setChartData(data);
       } catch (error) {
         console.error("Error fetching Line chart data:", error);
@@ -21,28 +20,25 @@ export default function LineChart() {
     getData();
   }, []);
 
-  // Update the chart when data is available
   useEffect(() => {
     if (chartData.length > 0 && chartRef.current) {
-      // Destroy the previous chart instance if it exists
       if ((chartRef.current as any).chart) {
-        (chartRef.current as any).chart.destroy();
+        (chartRef.current as any).chart.destroy(); // Destroy existing chart instance
       }
 
-      // Transform the API response into the format needed for Chart.js
-      const labels = chartData.map(item => item.label);
-      const values = chartData.map(item => parseFloat(item.value));
+      const labels = chartData.map(item => item.label); 
+      const values = chartData.map(item => parseFloat(item.value)); 
 
       const context = (chartRef.current as any).getContext("2d");
 
       const newChart = new Chart(context, {
         type: "line",
         data: {
-          labels: labels,  // Use the labels from the API response
+          labels: labels,
           datasets: [
             {
-              label: "Revenue",  // Customize the label as needed
-              data: values,  // Use the values from the API response
+              label: "Revenue", 
+              data: values, 
               fill: false,
               borderColor: "rgb(75, 192, 192)",
               tension: 0.1
@@ -54,13 +50,13 @@ export default function LineChart() {
         }
       });
 
-      (chartRef.current as any).chart = newChart;
+      (chartRef.current as any).chart = newChart;  // Save chart instance
     }
-  }, [chartData]);  // Re-run this effect when `chartData` changes
+  }, [chartData]);
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      <canvas ref={chartRef}></canvas>
+      <canvas ref={chartRef} data-testid="line-chart-canvas"></canvas>
     </div>
   );
 }

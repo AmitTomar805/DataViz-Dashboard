@@ -1,42 +1,38 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { Chart } from "chart.js/auto";
-import { fetchBarChartData } from '../../services/chartDataService';  // Import the function from the service
+import { fetchBarChartData } from '../../services/chartDataService';  
 
 export default function BarChart() {
   const chartRef = useRef(null);
   const [chartData, setChartData] = useState<any[]>([]);
 
   useEffect(() => {
-    // Fetch data using the service function
     const getChartData = async () => {
       try {
-        const data = await fetchBarChartData();  // Call the service function
-        setChartData(data);  // Set the fetched data
+        const data = await fetchBarChartData();  // Fetch chart data
+        setChartData(data);
       } catch (error) {
-        console.error("Error loading bar chart data:", error);
+        console.error("Error loading bar chart data:", error); 
       }
     };
 
-    getChartData();
+    getChartData(); 
   }, []);
 
   useEffect(() => {
     if (chartData.length > 0 && chartRef.current) {
-      // Destroy the existing chart instance if it exists
       if ((chartRef.current as any).chart) {
-        (chartRef.current as any).chart.destroy();
+        (chartRef.current as any).chart.destroy(); // Avoid duplicate chart rendering
       }
 
-      // Extract labels and values from the fetched data
-      const labels = chartData.map((item) => item.label);
-      const values = chartData.map((item) => parseFloat(item.value));
+      const labels = chartData.map((item) => item.label); 
+      const values = chartData.map((item) => parseFloat(item.value)); 
 
       const context = (chartRef.current as any).getContext("2d");
 
-      // Create a new chart instance
       const newChart = new Chart(context, {
-        type: "bar",
+        type: "bar", 
         data: {
           labels: labels,
           datasets: [
@@ -60,23 +56,22 @@ export default function BarChart() {
           ]
         },
         options: {
-          responsive: true,
+          responsive: true, 
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true 
             }
           }
         }
       });
 
-      // Save the new chart instance
       (chartRef.current as any).chart = newChart;
     }
-  }, [chartData]);  // Re-run when `chartData` changes
+  }, [chartData]); 
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      <canvas ref={chartRef}></canvas>
+      <canvas ref={chartRef} data-testid="bar-chart-canvas"></canvas>  
     </div>
   );
 }
