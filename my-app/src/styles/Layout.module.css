@@ -1,0 +1,46 @@
+.layoutContainer {
+    display: grid;
+    grid-template-areas: 
+      "nav nav"
+      "menu line pie"
+      "menu candlestick bar";
+    grid-template-columns: 200px 1fr 1fr;
+    grid-template-rows: 80px 1fr 1fr;
+    height: 100vh;
+  }
+  
+  .navBar {
+    grid-area: nav;
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .hamburgerMenu {
+    grid-area: menu;
+    background-color: #999;
+    padding: 20px;
+  }
+  
+  .mainContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .chart {
+    background-color: #bbb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border: 1px solid #000;
+  }
+  
+  #candlestickChart,
+  #barChart {
+    grid-row: 2;
+  }
+  
