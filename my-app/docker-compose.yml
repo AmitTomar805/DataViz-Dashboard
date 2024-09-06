@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .  # This refers to the current directory where Dockerfile is located
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Expose port 3000 to the host
+    volumes:
+      - .:/app  # Mount the current directory to the /app directory in the container
+      - /app/node_modules  # Ignore node_modules to avoid overwriting
+    environment:
+      - NODE_ENV=development  # Set the environment to development for hot reloading
+    command: npm run dev  # Use `npm run dev` for hot reloading in development
+
+volumes:
+  postgres_data: {}
