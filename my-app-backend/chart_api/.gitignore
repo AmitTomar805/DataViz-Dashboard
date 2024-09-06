@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific files
+*.log
+*.pot
+*.pyc
+*.sqlite3
+
+# If you're using SQLite database (optional)
+db.sqlite3
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Django migration files (you can keep these if you want to track migrations)
+*/migrations/*.pyc
+*/migrations/*.py~
+*/migrations/*.swp
+
+# Test coverage and pytest cache
+htmlcov/
+.tox/
+.cache/
+coverage.xml
+nosetests.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Virtual environments
+env/
+venv/
+ENV/
+venv.bak/
+.venv/
+
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore static and media files (you typically do not want to commit static/media files directly)
+staticfiles/
+media/
+
+# Docker files
+*.log
+docker-compose.override.yml
+*.pid
+tmp/
+
+# Node dependencies (if using frontend build tools like npm or yarn)
+node_modules/
+
+# Security-related files
+secrets.json
+
+# Gunicorn specific files
+gunicorn.sock

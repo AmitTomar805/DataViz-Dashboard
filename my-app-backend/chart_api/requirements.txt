@@ -1,0 +1,34 @@
+# Django web framework
+Django>=3.2,<4.0
+
+# Django REST Framework for building APIs
+djangorestframework>=3.12.4
+
+# Gunicorn for running the application in production
+gunicorn>=20.1.0
+
+# psycopg2 for PostgreSQL support
+psycopg2-binary>=2.9.1
+
+# Additional dependencies (optional, depending on your project)
+
+# For handling environment variables
+python-decouple>=3.5
+
+# For security (e.g., securing passwords)
+bcrypt>=3.2.0
+
+# For CORS handling in Django (if needed)
+django-cors-headers>=3.7.0
+
+# For linting and code quality checks (optional)
+flake8>=3.9.2
+
+# Other packages
+Django>=3.2
+djangorestframework>=3.12.4
+gunicorn>=20.1.0
+psycopg2-binary>=2.9.1
+
+# Add django-extensions
+django-extensions>=3.1.3
