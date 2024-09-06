@@ -1,3 +1,6 @@
+# DataViz Dashboard
+
+This project contains both the Next.js front-end and Django back-end for a data visualization dashboard. It uses Docker to simplify setup and deployment.
 
 ## Prerequisites
 
@@ -44,4 +47,28 @@ docker-compose up --build
 ### Stopping the Containers
 ```bash
 docker-compose down
+
 ```
+
+## Libraries and Tools Used
+### Front-End (Next.js):
+- Next.js: React-based framework for building static and dynamic web apps.
+- Material-UI: Component library for building responsive user interfaces.
+- ApexCharts: Charting library for displaying various chart types.
+- Jest: Testing framework used to write unit and integration tests for the Next.js front-end components.
+### Back-End (Django API):
+- Django: High-level Python web framework, used to manage and store chart data.
+- Django REST Framework: Toolkit for building Web APIs that serve the chart data to the front-end.
+### Docker:
+- Docker Compose: To orchestrate multi-container environments for Next.js and Django services.
+
+### Approach and Thought Process
+- The project is structured to maintain a clean separation between the front-end and back-end.
+
+- Next.js was selected for its strong support for SSR (Server-Side Rendering), performance, and built-in page routing. Next.js allows for intuitive and automatic routing based on the file structure, making navigation in the app seamless. The dashboard features dynamic charts, with both ApexCharts and Chart.js used to provide customizable and interactive data visualization, offering flexibility in chart types and styles.
+
+- Django was used on the back-end to serve the API. The Django REST Framework provides a robust toolkit for building API endpoints that the Next.js app fetches data from, ensuring that data is delivered efficiently to the front-end.
+
+- For testing, the Jest framework was integrated into the Next.js application. Jest allows for unit and integration testing of components, ensuring that the code is reliable and functions as expected. This testing strategy enhances code quality and provides confidence during development.
+
+- Docker ensures that the application runs consistently across different environments. Using Docker Compose allows the orchestration of multiple services (Next.js and Django), making it easy to manage dependencies and deploy the app in a unified, containerized environment.
