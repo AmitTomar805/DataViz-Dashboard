@@ -7,6 +7,8 @@ import LineChart from './charts/LineChart';
 import BarChart from './charts/BarChart';
 import CandlestickChart from './charts/CandlestickChart';
 import PieChart from './charts/PieChart';
+import HamburgerMenu from './HamburgerMenu';
+import TitleBar from './TitleBar';
 const Item = styled(Paper)(({ theme }: { theme: any }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
@@ -24,12 +26,12 @@ export default function Dashboard() {
           <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 2 }}>
             {/* Full width item */}
             <Box sx={{ gridColumn: 'span 12' }}>
-              <Item>xs=12</Item>
+              <Item><TitleBar/></Item>
             </Box>
             
             {/* Left panel */}
             <Box sx={{ gridColumn: 'span 2' }}>
-              <Item>xs=4</Item>
+              <Item><HamburgerMenu/></Item>
             </Box>
             
             {/* Right panel with 4 boxes in 2 rows */}
