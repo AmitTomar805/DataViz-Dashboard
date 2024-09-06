@@ -23,6 +23,7 @@ cd dataviz-dashboard
 
 ```bash
 cd my-app
+npm install
 docker-compose up --build
 ```
 ### Access the Next.js front-end in your browser at
@@ -34,7 +35,11 @@ docker-compose up --build
 cd my-app-backend/chart_api
 docker-compose up --build
 ```
-
+### Another Terminal Back-End (Django API)
+```bash
+cd my-app-backend/chart_api
+docker-compose run web python manage.py migrate
+```
 ### The Django API will be available at
 - http://localhost:8000
 

@@ -9,8 +9,7 @@ __pycache__/
 *.pyc
 *.sqlite3
 
-# If you're using SQLite database (optional)
-db.sqlite3
+
 
 # Local environment files
 .env
