@@ -1,28 +1,21 @@
 "use client";
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { fetchCandlestickData } from '../../services/chartDataService';  // Import the service
 
 // Dynamically import ReactApexChart to avoid server-side rendering issues
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function CandlestickChart() {
-  // Data for the candlestick chart
-  const chartData = [
-    { x: new Date("2023-01-01"), y: [30, 40, 25, 35] },
-    { x: new Date("2023-01-02"), y: [35, 45, 30, 40] },
-    { x: new Date("2023-01-03"), y: [40, 50, 35, 45] },
-    { x: new Date("2023-01-04"), y: [45, 55, 40, 50] },
-    { x: new Date("2023-01-05"), y: [50, 60, 45, 55] }
-  ];
-
-  // ApexCharts options and data structure
+  // State to store chart data and ApexChart options
+  const [series, setSeries] = useState([{ data: [] }]);
   const [options] = useState({
     chart: {
-      type: 'candlestick' as const, // Explicitly set type to "candlestick"
+      type: 'candlestick' as const,
       height: 350
     },
     xaxis: {
-      type: 'datetime' as const // Explicitly set type to "datetime"
+      type: 'datetime' as const
     },
     yaxis: {
       tooltip: {
@@ -31,15 +24,31 @@ export default function CandlestickChart() {
     }
   });
 
-  const [series] = useState([
-    {
-      data: chartData
-    }
-  ]);
+  // Fetch data on component mount
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchCandlestickData();  // Fetch data from the service
+
+        // Transform the API response into the format ApexCharts expects
+        const formattedData = data.map((item: any) => ({
+          x: new Date(item.x),
+          y: [parseFloat(item.open), parseFloat(item.high), parseFloat(item.low), parseFloat(item.close)]
+        }));
+
+        // Set the transformed data in the series
+        setSeries([{ data: formattedData }]);
+      } catch (error) {
+        console.error('Error fetching candlestick chart data:', error);
+      }
+    };
+
+    getData();
+  }, []);
 
   return (
-    <div id="chart" style={{height: "100%", width: "100%"}}>
-      <ApexChart options={options} series={series} type="candlestick"  />
+    <div id="chart" style={{ height: "100%", width: "100%" }}>
+      <ApexChart options={options} series={series} type="candlestick" />
     </div>
   );
 }
